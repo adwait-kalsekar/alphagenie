@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # local apps
     "alphatrader.apps.AlphatraderConfig",
     "alphahome.apps.AlphahomeConfig",
+    "alphamarket.apps.AlphamarketConfig",
     "alphabots.apps.AlphabotsConfig",
 ]
 

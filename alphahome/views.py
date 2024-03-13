@@ -16,3 +16,8 @@ def services(request):
     page = "services"
     context = {"page": page}
     return render(request, 'alphahome/services.html', context)
+
+def errorPage(request, all_path):
+    page = "error"
+    context = {"page": page}
+    return render(request, 'alphahome/error.html', context)

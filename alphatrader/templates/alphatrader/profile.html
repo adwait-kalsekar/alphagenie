@@ -1,0 +1,73 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}My Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Update Profile Info</h6>
+                <form action="{% url "update-profile" %}" method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input name="name" type="text" class="form-control" id="inputName">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input name="username" type="text" class="form-control" id="inputUsername">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input name="email" type="email" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Profile Picture</label>
+                        <input class="form-control bg-dark" type="file" id="formFile">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Change Password</h6>
+                <form action="{% url "update-password" %}" method="post">
+                    {% csrf_token %}
+                    <div class="row mb-3">
+                        <label for="inputPassword1" class="col-sm-2 col-form-label">Current Password</label>
+                        <div class="col-sm-10">
+                            <input name="currPassword" type="password" class="form-control" id="inputPassword1">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword2" class="col-sm-2 col-form-label">New Password</label>
+                        <div class="col-sm-10">
+                            <input name="newPassword" type="password" class="form-control" id="inputPassword2">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            <input type="newPassword1" class="form-control" id="inputPassword3">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 16vw;">
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

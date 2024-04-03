@@ -1,0 +1,63 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}Create Bot{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h3 class="mb-4">Create Your New αlphaBot</h3>
+                <form>
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-2 col-form-label">Bot Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="bot_name">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-2 col-form-label">Select Bucket</label>
+                        <div class="col-sm-10">
+                            <select class="form-select mb-3" aria-label="Default select example">
+                                <option selected>Choose Existing or Create a New One</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Custom</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="col-sm-2 col-form-label">Choose Trading Strategies</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="option1">
+                            <label class="form-check-label">MACD</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="option2">
+                            <label class="form-check-label">Renko</label>
+                        </div>
+                    </div>
+                    <div class="row mt-3 mb-3">
+                        <label for="" class="col-sm-2 col-form-label">Select BackTesting Strategy</label>
+                        <div class="col-sm-10">
+                            <select class="form-select mb-3" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">CAGR</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Test</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}

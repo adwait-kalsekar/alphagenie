@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -14,7 +15,7 @@ def loginUser(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect(reverse('dashboard'))
+            return redirect('dashboard')
         else:
             return render(request, 'alphatrader/login.html', {'error': 'Invalid username or password'})
     else:
@@ -31,9 +32,12 @@ def signupUser(request):
 
         if password != password2:
             return render(request, 'alphatrader/signup.html', {'error': 'Passwords do not match'})
-        # user = User.objects.create_user(username=username, password=password, email=email)
-        # user.save()
-        return render(request, 'alphatrader/signup.html')
+        user = User.objects.create_user(username=username, password=password, email=email)
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name') or ' '
+        user.save()
+        login(request, user)
+        return redirect('dashboard')
     else:
         return render(request, 'alphatrader/signup.html')
 

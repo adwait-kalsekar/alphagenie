@@ -1,0 +1,57 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}αlphaBots{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h4 class="mb-4 ">Your αlphaBots</h4>
+                <a href="{% url "createBot" %}" style="float: right;" class="btn btn-primary">Create New</a>
+                <span>Total Bots deployed: 4</span>
+                <div style="margin-bottom: 3vw;"></div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-white">
+                                <th scope="col">Bot Name</th>
+                                <th scope="col">Bucket</th>
+                                <th scope="col">Strategies</th>
+                                <th scope="col">Amount Invested</th>
+                                <th scope="col">Returns</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TestBot</td>
+                                <td>AAPL, MSFT, GOOG</td>
+                                <td>MACD</td>
+                                <td>$1000</td>
+                                <td>$108</td>
+                                <td>Active</td>
+                                <td><a class="btn btn-sm btn-primary" href="">Disable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
+                            </tr>
+                            <tr>
+                                <td>TestBot2</td>
+                                <td>AMZN, MSFT</td>
+                                <td>MACD, Renko</td>
+                                <td>$100</td>
+                                <td>$12</td>
+                                <td>Inactive</td>
+                                <td><a class="btn btn-sm btn-primary" href="">Enable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

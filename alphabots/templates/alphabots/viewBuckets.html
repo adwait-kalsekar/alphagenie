@@ -1,0 +1,51 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}Stock Buckets{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h4 class="mb-4 ">Your Stock Buckets</h4>
+                <a href="{% url "createBucket" %}" style="float: right;" class="btn btn-primary">Create New</a>
+                <span>Total Buckets: 2</span>
+                <div style="margin-bottom: 2vw;"></div>
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <thead>
+                            <tr class="text-white">
+                                <th scope="col">Bucket Name</th>
+                                <th scope="col">Stocks</th>
+                                <th scope="col">Date Created</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bucket1</td>
+                                <td>AAPL, MSFT, GOOG</td>
+                                <td>04/05/2024</td>
+                                <td><a class="btn btn-sm btn-primary" href="">Delete</a></td>
+                            </tr>
+                            <tr>
+                                <td>Bucket2</td>
+                                <td>AMZN, MSFT</td>
+                                <td>03/22/2024</td>
+                                <td><a class="btn btn-sm btn-primary" href="">Delete</a></td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 5vw;">
+</div>
+
+
+{% endblock content %}

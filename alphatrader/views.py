@@ -23,7 +23,7 @@ def loginUser(request):
 
 def signupUser(request):
     if request.user.is_authenticated:
-        return redirect(reverse('dashboard'))
+        return redirect('dashboard')
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -54,7 +54,34 @@ def profile(request):
 
 @login_required(login_url='login')
 def updateProfile(request):
-    print('Updating profile')
+    if request.method == 'POST':
+        # Assuming you have a form to update the profile data
+        user = request.user
+        traderProfile = user.traderprofile
+
+        if 'profile_image' in request.FILES:
+            print("hello")
+            profile_image = request.FILES['profile_image']
+            request.user.traderprofile.profile_image = profile_image
+            request.user.traderprofile.save()
+
+        f_name = request.POST.get('first_name')
+        l_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+
+        if f_name:
+            user.first_name = f_name
+        if l_name:
+            user.last_name = l_name
+        if username:
+            user.username = username
+        if email:
+            user.email = email
+        
+        user.save()
+
+        print(user, traderProfile)
     return redirect(reverse('profile'))
 
 @login_required(login_url='login')

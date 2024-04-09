@@ -23,18 +23,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for bucket in buckets %}
                             <tr>
-                                <td>Bucket1</td>
-                                <td>AAPL, MSFT, GOOG</td>
-                                <td>04/05/2024</td>
-                                <td><a class="btn btn-sm btn-primary" style="margin-left:10px;" href="">Delete</a> <a style="margin-left:10px;" class="btn btn-sm btn-primary" href="">View</a></td>
+                                <td>{{bucket.name}}</td>
+                                <td>
+                                    {% for symbol in bucket.symbols.all %}
+                                        {{symbol.symbol}},
+                                    {% endfor %}
+                                </td>
+                                <td>{{bucket.created_at|date:"Y-m-d"}}</td>
+                                <td><a class="btn btn-sm btn-primary" style="margin-left:10px;" href="">Edit</a> <a style="margin-left:10px;" class="btn btn-sm btn-primary" href="{% url "deleteBucket" bucket.id %}">Delete</a></td>
                             </tr>
-                            <tr>
-                                <td>Bucket2</td>
-                                <td>AMZN, MSFT</td>
-                                <td>03/22/2024</td>
-                                <td><a class="btn btn-sm btn-primary" style="margin-left:10px;" href="">Delete</a> <a style="margin-left:10px;" class="btn btn-sm btn-primary" href="">View</a></td>
-                            </tr>
+                            {% endfor %}
                             
                         </tbody>
                     </table>

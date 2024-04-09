@@ -1,6 +1,6 @@
 {% extends "dashboard/main.html" %}
 
-{% block title %}Error{% endblock title %}
+{% block title %}Confirm Delete{% endblock title %}
 
 {% block content %}
 
@@ -8,10 +8,9 @@
     <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
         <div class="col-md-6 text-center p-4">
             <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
-            <h1 class="display-1 fw-bold">{{error_code}}</h1>
-            <h1 class="mb-4">{{error_message}}</h1>
-            <p class="mb-4">{{error_info}}</p>
-            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "dashboard" %}">Go Back To Dashboard</a>
+            <h1 class="mb-4">{{delete_message}}</h1>
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "confirmDeleteBucket" resource id %}">Yes</a>
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "viewBuckets" %}">No</a>
         </div>
     </div>
 </div>

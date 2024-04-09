@@ -9,7 +9,8 @@ urlpatterns = [
     path("profile/", views.profile, name="profile"),
     path("update-profile/", views.updateProfile, name="update-profile"),
     path("update-password/", views.updatePassword, name="update-password"),
+    path("wallet/", views.wallet, name="wallet"),
 
     # render 404 error page
-    path("<path:all_path>/", views.errorPage, name="error"),
+    path("<path:all_path>/", views.pageNotFoundError, name="error"),
 ]

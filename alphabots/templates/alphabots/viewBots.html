@@ -26,6 +26,25 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for bot in bots %}
+                            <tr>
+                                <td>{{bot.name}}</td>
+                                <td>
+                                    {% for symbol in bot.bucket.symbols.all %}
+                                        {{symbol.symbol}},
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {% for strategy in bot.strategy.name.all %}
+                                        {{symbol.symbol}},
+                                    {% endfor %}
+                                </td>
+                                <td>$1000</td>
+                                <td>$108</td>
+                                <td>Active</td>
+                                <td><a class="btn btn-sm btn-primary" href="">Disable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
+                            </tr>
+                            {% endfor %}
                             <tr>
                                 <td>TestBot</td>
                                 <td>AAPL, MSFT, GOOG</td>

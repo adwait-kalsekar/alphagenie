@@ -90,5 +90,30 @@ def updatePassword(request):
     return redirect(reverse('profile'))
 
 @login_required(login_url='login')
-def errorPage(request, all_path):
-    return render(request, 'alphatrader/error.html')
+def wallet(request):
+    page = "wallet"
+
+    if request.method == 'POST':
+        try:
+            user = request.user
+            traderProfile = user.traderprofile
+            amount = int(request.POST.get('amount'))
+            if amount > 100000:
+                raise Exception('Amount too high')
+            if amount:
+                traderProfile.funds = traderProfile.funds + amount
+                traderProfile.save()
+        except Exception as e:
+            print(e)
+            return errorPage(request, "500", "Error Adding Funds", "There was an error adding funds to your wallet. Check the Amount and Try Again.")
+
+    context = {"page": page}
+    return render(request, 'alphatrader/wallet.html', context)
+
+@login_required(login_url='login')
+def pageNotFoundError(request, all_path):
+    return errorPage(request, 404, "Page not found", "We’re sorry, the page you have looked for does not exist in our website!") 
+
+def errorPage(request, error_code, error_message, error_info):
+    context = {"error_code": error_code, "error_message": error_message, "error_info": error_info}
+    return render(request, 'alphabots/error.html', context)

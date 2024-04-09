@@ -1,32 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
+from alphatrader.models import TraderProfile
 
 # Create your models here.
 
 class StockSymbol(models.Model):
-    symbol = models.CharField(max_length=10)
-    name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.symbol
 
 class Bucket(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     symbols = models.ManyToManyField(StockSymbol)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(TraderProfile, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
 
 class Strategy(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
 
     def __str__(self):
         return self.name
 
 class Backtesting(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     bot = models.ForeignKey('TradingBot', on_delete=models.CASCADE)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
 
@@ -34,11 +36,12 @@ class Backtesting(models.Model):
         return self.name
 
 class TradingBot(models.Model):
-    name = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, unique=True)
+    user = models.ForeignKey(TraderProfile, on_delete=models.CASCADE)
     bucket = models.ForeignKey(Bucket, on_delete=models.CASCADE)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     is_deployed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name

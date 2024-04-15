@@ -22,15 +22,21 @@ class Bucket(models.Model):
 
 class Strategy(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+    
+class KPI(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 class Backtesting(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    bot = models.ForeignKey('TradingBot', on_delete=models.CASCADE)
-    strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
+    description = models.TextField()
 
     def __str__(self):
         return self.name

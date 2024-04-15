@@ -1,0 +1,209 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}Details{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Adjusted Close Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="adjClose" width="800" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Open Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="open" width="800" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Close Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="close" width="800" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">High Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="high" width="800" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Low Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="low" width="800" height="200"></canvas>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Volume Price</h6>
+                <div>
+                    <label for="timeframe">Select Time Frame:</label>
+                    <select onchange="window.location.href = '{% url "marketDetails" ticker %}?period=' + this.value;" id="timeframe" onchange="updateChart(this.value)">
+                        <option value="1mo" {% if period == '1mo' %} selected {% endif %} >1 Month</option>
+                        <option value="3mo" {% if period == '3mo' %} selected {% endif %} >3 Months</option>
+                        <option value="6mo" {% if period == '6mo' %} selected {% endif %} >6 Months</option>
+                        <option value="1y" {% if period == '1y' %} selected {% endif %} >1 Year</option>
+                        <option value="5y" {% if period == '5y' %} selected {% endif %} >5 Years</option>
+                        <option value="10y" {% if period == '10y' %} selected {% endif %} >10 Years</option>
+                    </select>
+                </div>
+                <canvas id="volume" width="800" height="200"></canvas>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+    function createChart(stockData, chart_canvas_id) {
+        // Initialize arrays to hold labels and datasets
+        var labels = [];
+        var datasets = [];
+
+        // Loop through each stock symbol's data
+        Object.keys(stockData).forEach(function(symbol) {
+            var data = stockData[symbol];
+
+            // Extract date and Adj_close values
+            var dates = data.map(function(item) {
+                return item[0];
+            });
+            var adjClose = data.map(function(item) {
+                return item[1];
+            });
+
+            // Add a new dataset for the current symbol
+            datasets.push({
+                label: symbol,
+                data: adjClose,
+                fill: false,
+                borderColor: getRandomColor()
+            });
+
+            // Use dates from the first symbol as labels
+            if (labels.length === 0) {
+                labels = dates;
+            }
+        });
+
+        // Create a new Chart using Chart.js
+        var ctx = document.getElementById(chart_canvas_id).getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+                            displayFormats: {
+                                day: 'MMM D'
+                            }
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Function to generate random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    }
+
+    var stock_data_adj_close = JSON.parse(`{{ stock_data_adj_close|escapejs }}`);
+    createChart(stock_data_adj_close, 'adjClose');
+
+    var stock_data_open = JSON.parse(`{{ stock_data_open|escapejs }}`);
+    createChart(stock_data_open, 'open');
+
+    var stock_data_close = JSON.parse(`{{ stock_data_close|escapejs }}`);
+    createChart(stock_data_close, 'close');
+
+    var stock_data_high = JSON.parse(`{{ stock_data_high|escapejs }}`);
+    createChart(stock_data_high, 'high');
+
+    var stock_data_low = JSON.parse(`{{ stock_data_low|escapejs }}`);
+    createChart(stock_data_low, 'low');
+
+    var stock_data_volume = JSON.parse(`{{ stock_data_volume|escapejs }}`);
+    console.log(stock_data_volume);
+    createChart(stock_data_volume, 'volume');
+</script>
+
+{% endblock content %}

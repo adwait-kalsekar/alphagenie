@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-from .models import StockSymbol, Bucket, TradingBot
-from alphatrader.models import TraderProfile
+import json
+import pandas as pd
+from .models import StockSymbol, Bucket, TradingBot, Strategy, Backtesting
+from .utils.data_downloader import fetch_adj_close_data, fetch_data
+from .utils.kpi import CAGR, volatility, sharpe, sortino, max_dd, calmar
 
 # Create your views here.
 
@@ -27,15 +30,17 @@ def createBot(request):
     page = "alphabots"
     
     user = request.user
+
+    strategies = Strategy.objects.all()
+    backtesting = Backtesting.objects.all()
     buckets = Bucket.objects.filter(user=user.traderprofile)
-    context = {"page": page, "buckets": buckets}
+    context = {"page": page, "buckets": buckets, "strategies": strategies, "backtesting": backtesting}
     return render(request, 'alphabots/createBot.html', context)
 
 @login_required(login_url='login')
 def viewBuckets(request):
     page = "buckets"
-    
-    # get all buckets for this user
+
     try:
         user = request.user
         buckets = Bucket.objects.filter(user=user.traderprofile)
@@ -57,7 +62,7 @@ def createBucket(request):
 
             new_bucket = Bucket.objects.create(name=bucket_name, user=request.user.traderprofile)
             for symbol_id in symbol_list:
-                symbol = StockSymbol.objects.get(id=symbol_id) # Assuming symbol name is unique
+                symbol = StockSymbol.objects.get(id=symbol_id)
                 new_bucket.symbols.add(symbol)
 
             new_bucket.save()
@@ -98,6 +103,53 @@ def confirmDeleteBucket(request, resource, id):
     
     else:
         return errorPage(request, "404", "Resource Not Found", "The Resource you mentioned is incorrect.")
+
+@login_required(login_url='login')
+def bucketDetails(request, id):
+    page = "buckets"
+    trader = request.user
+    try:
+        bucket_id = int(id)
+        bucket = Bucket.objects.get(Q(id=bucket_id) & Q(user=trader.traderprofile))
+        bucket_stocks = bucket.symbols.all()
+        tickers = []
+        for stock in bucket_stocks:
+            tickers.append(stock.symbol)
+
+        period = request.GET.get("period")
+        if period == None:
+            period = '5y'
+
+        stock_data_df = fetch_adj_close_data(tickers, period)
+
+        # Replace NaN values with None
+        stock_data_df = stock_data_df.dropna()
+
+        # Convert the DataFrame to a dictionary
+        stock_data_dict = {}
+        for col in stock_data_df.columns:
+            stock_data_dict[col] = stock_data_df[[col]].reset_index().apply(lambda x: [x['Date'].strftime('%Y-%m-%d'), x[col]], axis=1).tolist()
+
+        # Convert the dictionary to JSON format
+        stock_data_json = json.dumps(stock_data_dict)
+
+        stock_kpi = {}
+        for ticker in tickers:
+            df = fetch_data(ticker, period)
+            stock_kpi[ticker] = {}
+            stock_kpi[ticker]["CAGR"] = CAGR(df)
+            stock_kpi[ticker]["Volatility"] = volatility(df)
+            stock_kpi[ticker]["Sharpe"] = sharpe(df)
+            stock_kpi[ticker]["Sortino"] = sortino(df)
+            stock_kpi[ticker]["Max Drawdown"] = max_dd(df)
+            stock_kpi[ticker]["Calmar Ratio"] = calmar(df)
+        
+        context = {"page": page, "bucket": bucket, "tickers": tickers, "stock_data_json": stock_data_json, "period": period, "stock_kpi": stock_kpi}
+        return render(request, "alphabots/bucketDetails.html", context)
+    except Exception as e:
+        print(e)
+        return errorPage(request, "404", "Error Fetching bucket", "There was an error Fetching the Stock bucket. Please Try Again")
+    
 
 @login_required(login_url='login')
 def pageNotFoundError(request, all_path):

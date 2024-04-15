@@ -3,11 +3,12 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("viewBots", views.viewBots, name="viewBots"),
-    path("createBot/", views.createBot, name="createBot"),
-    path("viewBuckets/", views.viewBuckets, name="viewBuckets"),
-    path("createBucket/", views.createBucket, name="createBucket"),
-    path("deleteBucket/<str:id>/", views.deleteBucket, name="deleteBucket"),
+    path("view-bots", views.viewBots, name="viewBots"),
+    path("create-bot/", views.createBot, name="createBot"),
+    path("view-buckets/", views.viewBuckets, name="viewBuckets"),
+    path("create-bucket/", views.createBucket, name="createBucket"),
+    path("delete-bucket/<str:id>/", views.deleteBucket, name="deleteBucket"),
+    path("bucket-details/<str:id>/", views.bucketDetails, name="bucketDetails"),
     
     path("confirmDelete/<str:resource>/<str:id>/", views.confirmDeleteBucket, name="confirmDeleteBucket"),
 

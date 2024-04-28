@@ -28,7 +28,7 @@ def marketDetails(request, ticker):
     try:
         period = request.GET.get("period")
         if period == None:
-            period = '5y'
+            period = '1mo'
 
         stock_data_adj_close = fetch_data(ticker, period, StockDataTypes.ADJ_CLOSE.value)
         stock_data_open = fetch_data(ticker, period, StockDataTypes.OPEN.value)

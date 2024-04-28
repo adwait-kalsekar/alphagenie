@@ -33,7 +33,7 @@ def download_data(tickers=[], period='10y'):
     file_path = os.path.join(datasets_dir, 'combined_adj_close.csv')
     cl_price.to_csv(file_path, index='Date')
 
-def fetch_data(ticker, period='10y', type='Adj Close'):
+def fetch_data(ticker, period='1mo', type='Adj Close'):
     static_dir = settings.STATICFILES_DIRS[0]  
     datasets_dir = os.path.join(static_dir, 'datasets')
     file_path = os.path.join(datasets_dir, f'{ticker}.csv')
@@ -66,7 +66,7 @@ def fetch_data(ticker, period='10y', type='Adj Close'):
 
     return filtered_df
 
-def fetch_adj_close_data(tickers, period='10y'):
+def fetch_adj_close_data(tickers, period='1mo'):
     static_dir = settings.STATICFILES_DIRS[0]
     datasets_dir = os.path.join(static_dir, 'datasets')
     file_path = os.path.join(datasets_dir, 'combined_adj_close.csv')

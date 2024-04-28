@@ -118,7 +118,7 @@ def bucketDetails(request, id):
 
         period = request.GET.get("period")
         if period == None:
-            period = '5y'
+            period = '1mo'
 
         stock_data_df = fetch_adj_close_data(tickers, period)
 
@@ -141,8 +141,10 @@ def bucketDetails(request, id):
             stock_kpi[ticker]["Volatility"] = volatility(df)
             stock_kpi[ticker]["Sharpe"] = sharpe(df)
             stock_kpi[ticker]["Sortino"] = sortino(df)
-            stock_kpi[ticker]["Max Drawdown"] = max_dd(df)
-            stock_kpi[ticker]["Calmar Ratio"] = calmar(df)
+            stock_kpi[ticker]["Max_Drawdown"] = max_dd(df)
+            stock_kpi[ticker]["Calmar_Ratio"] = calmar(df)
+
+        print(stock_kpi)
         
         context = {"page": page, "bucket": bucket, "tickers": tickers, "stock_data_json": stock_data_json, "period": period, "stock_kpi": stock_kpi}
         return render(request, "alphabots/bucketDetails.html", context)

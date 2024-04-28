@@ -5,7 +5,7 @@ from alphabots.models import StockSymbol
 import os
 import json
 
-def fetch_data(ticker, period='10y', type='Adj Close'):
+def fetch_data(ticker, period='1mo', type='Adj Close'):
     static_dir = settings.STATICFILES_DIRS[0]  
     datasets_dir = os.path.join(static_dir, 'datasets')
     file_path = os.path.join(datasets_dir, f'{ticker}.csv')

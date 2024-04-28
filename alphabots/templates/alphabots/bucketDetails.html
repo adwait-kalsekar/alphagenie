@@ -1,6 +1,6 @@
 {% extends "dashboard/main.html" %}
 
-{% block title %}Details{% endblock title %}
+{% block title %}Bucket Details{% endblock title %}
 
 {% block content %}
 
@@ -97,35 +97,39 @@
         </div>
         <div class="col-sm-12 col-xl-12">
             <div class="bg-secondary rounded h-100 p-4">
-                <h6 class="mb-4">Key Performance Indiicators</h6>
+                <h4 class="mb-4">Key Performance Indiicators</h4>
+                <h6>Select Symbol</h6>
                 <div class="d-flex align-items-start">
                     <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                         aria-orientation="vertical">
                         {% for ticker in tickers %}
-                        <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-home" type="button" role="tab"
-                            aria-controls="v-pills-home" aria-selected="false">{{ticker}}</button>
+                        <button style="margin: 20px;" class="nav-link " id="v-pills-{{ticker}}-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-{{ticker}}" type="button" role="tab"
+                            aria-controls="v-pills-{{ticker}}" aria-selected="true"><span style="font-size: 20px;" >{{ticker}}</span></button>
                         {% endfor %}
-                        <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-home" type="button" role="tab"
-                            aria-controls="v-pills-home" aria-selected="true">Home</button>
-                        <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill"
-                            data-bs-target="#v-pills-settings" type="button" role="tab"
-                            aria-controls="v-pills-settings" aria-selected="false">Settings</button>
                     </div>
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                            Consetetur at sit est sit ut ipsum clita at. Sit elitr sit sea dolor tempor eos sit, erat diam ea rebum clita no ea. Et amet sed nonumy sadipscing dolor et ut sed et. Stet eirmod est nonumy clita invidunt rebum. Nonumy dolor ut diam invidunt eirmod nonumy sed gubergren,.
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                            Tempor et kasd accusam duo et dolor no accusam dolore, dolor sed voluptua duo no, sit et stet lorem dolor ipsum tempor consetetur vero, consetetur est eos sit eirmod erat diam accusam sadipscing sit. Takimata erat ea eirmod tempor elitr dolore sadipscing kasd justo, elitr tempor sed eos sadipscing magna.
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                            Sed kasd kasd ea clita sed lorem amet tempor est voluptua, labore stet dolores gubergren clita lorem sed nonumy at. Dolores et ut erat voluptua. Est voluptua stet accusam rebum, elitr amet sit takimata sea eirmod. Sanctus elitr amet sit dolore sea stet et ut. Dolor et sanctus elitr ut.
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                            Sit et vero kasd sea et at, aliquyam takimata et et est, labore et takimata sed ut stet sanctus, nonumy dolor invidunt sit labore et, amet et dolor sit dolor tempor et dolor ipsum nonumy, accusam clita sadipscing ut et labore labore est, dolore accusam vero at est sit. Invidunt.
-                        </div>
+                    <div class="tab-content p-4" id="v-pills-tabContent">
+                        {% for stock_symbol, kpi_values in stock_kpi.items %}
+                            <div class="tab-pane fade" style="padding-left: 200px;" id="v-pills-{{ stock_symbol }}" role="tabpanel" aria-labelledby="v-pills-{{ stock_symbol }}-tab">
+                                <table class="table table-bordered" style="font-size: 20px; border-color: #6c7293;">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding: 20px;" scope="col">KPI</th>
+                                            <th style="padding: 20px;" scope="col">Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for kpi, values in kpi_values.items %}
+                                        <tr>
+                                            <th style="padding: 20px;" scope="row">{{kpi}}</th>
+                                            <td style="padding: 20px;">{{values|floatformat:"4"}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        {% endfor %}
                     </div>
                 </div>
             </div>

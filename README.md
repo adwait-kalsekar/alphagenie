@@ -31,8 +31,8 @@ Welcome to AlphaGenie, a comprehensive stock data platform designed for tech sto
 
 Before you set up your local development environment, ensure you have the following installed:
 
-- Python (3.9 or newer)
-- Django (4.2 or newer)
+- Python (3.8 or 3.9)
+- Django (4.2)
 - Other dependencies listed in `requirements.txt`
 
 ### Installation

@@ -25,6 +25,44 @@ Welcome to AlphaGenie, a comprehensive stock data platform designed for tech sto
 - **Portfolio Rebalancing:** Utilize sophisticated rebalancing techniques to backtest strategies and improve performance.
 - **Performance Visualization:** Compare your bots' performance against standard index funds, visualizing effectiveness and strategy success.
 
+## Technology Stack
+
+AlphaGenie leverages a robust set of technologies and libraries to deliver a seamless and dynamic user experience. Below is a breakdown of the key components of our tech stack:
+
+### Backend
+
+- **Django:** Our primary web framework, responsible for handling backend logic, user authentication, and data interactions.
+
+### Frontend
+
+- **Django Templates:** Used for rendering HTML dynamically.
+- **HTML, CSS, and JavaScript:** Core technologies for building and styling the user interface.
+
+### Chart Visualizations
+
+- **Chart.js:** A flexible JavaScript library used to create interactive graphs and charts to display market data and analytics visually.
+
+### Database
+
+- **SQLite:** Our choice for a lightweight, file-based database, ideal for development and smaller-scale applications.
+
+### Machine Learning
+
+- **Numpy & Pandas:** Essential libraries for data manipulation and analysis.
+- **SciKit-Learn:** Utilized for implementing various machine learning models.
+- **TensorFlow:** An advanced framework used for building and training more complex models like LSTM for stock prediction.
+
+### Notebook Visualizations
+
+- **Matplotlib & Seaborn:** These libraries are used for creating static, interactive, and animated visualizations within Python notebooks.
+
+### Development Tools
+
+- **Git:** Version control system to manage code changes.
+- **Visual Studio Code:** Preferred editor for writing and managing code.
+
+This stack enables AlphaGenie to efficiently process, analyze, and display data while providing a responsive user interface for our clients.
+
 ## Getting Started
 
 ### Prerequisites

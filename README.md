@@ -103,6 +103,32 @@ AlphaGenie is structured into several Django apps and utility folders, each serv
 
 For details on setting up and running the project, refer to the [Getting Started](#getting-started) section above. Ensure all dependencies are installed as per the `requirements.txt` file to avoid any issues during deployment or development.
 
-## Contributions
+## Application Screenshots
 
-Contributions to improve AlphaGenie are always welcome. Whether it's enhancing the predictive models, refining the trading algorithms, or improving the UI/UX, your input is valuable. Check out our [CONTRIBUTING.md](CONTRIBUTING.md) for more information on how to make your contributions count.
+Below are screenshots demonstrating key functionalities of the AlphaGenie platform:
+
+#### Home Page
+
+![Home Page](static/images/app_screenshots/home_1.png 'Screenshot of the Home Page')
+
+#### User Dashboard
+
+![User Dashboard](static/images/app_screenshots/dashboard.png 'Screenshot of the User Dashboard')
+
+#### Predictive Models
+
+![Predictive Models](static/images/app_screenshots/predictions.png 'Screenshot of Stock Prediction Models')
+
+#### Stock Buckets
+
+![Stock Buckets](static/images/app_screenshots/buckets1.png 'Screenshot of Stock Buckets')
+
+![Stock Buckets](static/images/app_screenshots/buckets2.png 'Screenshot of Stock Buckets')
+
+#### Alphabots
+
+![Alphabots](static/images/app_screenshots/bot1.png 'Screenshot of Alphabots')
+
+![Alphabots](static/images/app_screenshots/bot3.png 'Screenshot of Alphabots')
+
+More screenshots are available in the static directory -> images -> app_screenshots

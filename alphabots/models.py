@@ -47,6 +47,8 @@ class TradingBot(models.Model):
     bucket = models.ForeignKey(Bucket, on_delete=models.CASCADE)
     strategy = models.ForeignKey(Strategy, on_delete=models.CASCADE)
     is_deployed = models.BooleanField(default=False)
+    amount_invested = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    current_value = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

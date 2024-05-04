@@ -1,0 +1,43 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}Predictions{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h4 class="mb-4">Stock Market Predictions for Top 10 Companies</h4>
+                <span>Click on the Stock Ticker to see Predictions</span>
+                <div style="margin-bottom: 2vw;"></div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Ticker</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, ticker in tickers %}
+                            <tr onclick="window.location.href = '{% url "predictionDetails" ticker %}'">
+                                <th scope="row">{{index|add:1}}</th>
+                                <td>{{ticker.name}}</td>
+                                <td>{{ticker.symbol}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-bottom: 5vw;">
+</div>
+
+
+{% endblock content %}

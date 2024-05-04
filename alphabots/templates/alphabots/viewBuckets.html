@@ -10,7 +10,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h4 class="mb-4 ">Your Stock Buckets</h4>
                 <a href="{% url "createBucket" %}" style="float: right;" class="btn btn-primary">Create New</a>
-                <span>Total Buckets: 2</span>
+                <span>Total Buckets: {{total_buckets}}</span>
                 <div style="margin-bottom: 2vw;"></div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">

@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 import json
 from alphabots.models import StockSymbol
-from alphamarket.utils.fetch_details import fetch_data, get_json
+from alphamarket.utils.fetch_details import fetch_data, get_json, fetch_data_for_pred
+from alphamarket.utils.predict import predict_data
 from alphamarket.utils.stock_data_types import StockDataTypes
 
 # Create your views here.
@@ -60,8 +61,46 @@ def marketDetails(request, ticker):
     except Exception as e:
         print(e)
         return errorPage(request, "404", "Error Fetching Details", "There was an error Fetching the Stock Market Details. Please Try Again")
+    
+@login_required(login_url='login')
+def predictions(request):
+    page = "predictions"
+    tickers = StockSymbol.objects.all()
+    tickers_with_index = zip(range(len(tickers)), tickers)
+    context = {"page": page, "tickers": tickers_with_index}
+    return render(request, 'alphamarket/predictions.html', context)
+
+@login_required(login_url='login')
+def predictionDetails(request, ticker):
+    page = "predictions"
+
+    try:
+        stock_data_adj_close = fetch_data_for_pred(ticker, StockDataTypes.ADJ_CLOSE.value)
+        
+        predicted_data = predict_data(ticker, stock_data_adj_close)
+        print(predicted_data)
+
+        stock_data_adj_close = get_json(stock_data_adj_close)
+
+        predicted_data  = get_json(predicted_data)
+        
+        context = {
+            "page": page, 
+            "ticker": ticker, 
+            "stock_data_adj_close": stock_data_adj_close,
+            "predicted_data": predicted_data,
+        }
+        return render(request, 'alphamarket/predictionDetails.html', context)
+    
+    except Exception as e:
+        print(e)
+        return errorPage(request, "404", "Error Fetching Details", "There was an error Fetching the Stock Market Details. Please Try Again")
 
 
 @login_required(login_url='login')
-def errorPage(request, all_path):
-    return render(request, 'alphamarket/error.html')
+def pageNotFoundError(request, all_path):
+    return errorPage(request, 404, "Page not found", "We’re sorry, the page you have looked for does not exist in our website!") 
+
+def errorPage(request, error_code, error_message, error_info):
+    context = {"error_code": error_code, "error_message": error_message, "error_info": error_info}
+    return render(request, 'alphabots/error.html', context)

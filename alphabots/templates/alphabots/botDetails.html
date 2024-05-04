@@ -1,0 +1,136 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}Bot Details{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h4 class="mb-4">Bot Visualizations</h4>
+                
+                <canvas id="stockChart" width="800" height="200"></canvas>
+
+                <script>
+                    var stockData = {{ max_return_strategy_json|safe }};
+                    var indexData = {{ max_return_index_json|safe }};
+
+                    // Initialize arrays to hold labels and datasets
+                    var labels = [];
+                    var datasets = [];
+
+                    // Assuming both datasets are similar in length and labels can be shared
+                    for (var i = 1; i <= stockData.mon_ret.length; i++) {
+                        labels.push('Month ' + i);
+                    }
+
+                    // Add dataset for stock returns
+                    datasets.push({
+                        label: 'Strategy Returns',
+                        data: stockData.mon_ret,
+                        fill: false,
+                        borderColor: getRandomColor(),  // Function to get random color
+                        tension: 0.1  // Smooths the line
+                    });
+
+                    // Add dataset for index returns
+                    datasets.push({
+                        label: 'Index Returns',
+                        data: indexData.mon_ret,
+                        fill: false,
+                        borderColor: getRandomColor(),  // Function to get random color
+                        tension: 0.1  // Smooths the line
+                    });
+
+                    // Create a new Chart using Chart.js
+                    var ctx = document.getElementById('stockChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: datasets
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Month'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Return Multiplier'
+                                    },
+                                    beginAtZero: false
+                                }
+                            }
+                        }
+                    });
+                
+                    // Function to generate random color for the chart line
+                    function getRandomColor() {
+                        var letters = '0123456789ABCDEF';
+                        var color = '#';
+                        for (var i = 0; i < 6; i++) {
+                            color += letters[Math.floor(Math.random() * 16)];
+                        }
+                        return color;
+                    }
+                </script>
+                
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h4 class="mb-4">Key Performance Indicators</h4>
+                <h6>KPI for Index</h6>
+                <div class="col-sm-12 col-xl-12">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <table class="table table-bordered" style="font-size: 20px; border-color: #6c7293;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 20px;" scope="col">KPI</th>
+                                    <th style="padding: 20px;" scope="col">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for kpi, values in index_kpi.items %}
+                                <tr>
+                                    <th style="padding: 20px;" scope="row">{{kpi}}</th>
+                                    <td style="padding: 20px;">{{values|floatformat:"4"}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <h6>KPI for Strategy</h6>
+                <div class="col-sm-12 col-xl-12">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <table class="table table-bordered" style="font-size: 20px; border-color: #6c7293;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 20px;" scope="col">KPI</th>
+                                    <th style="padding: 20px;" scope="col">Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for kpi, values in strategy_kpi.items %}
+                                <tr>
+                                    <th style="padding: 20px;" scope="row">{{kpi}}</th>
+                                    <td style="padding: 20px;">{{values|floatformat:"4"}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

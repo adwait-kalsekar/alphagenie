@@ -10,7 +10,7 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h4 class="mb-4 ">Your αlphaBots</h4>
                 <a href="{% url "createBot" %}" style="float: right;" class="btn btn-primary">Create New</a>
-                <span>Total Bots deployed: 4</span>
+                <span>Total Bots deployed: {{total_bots}}</span>
                 <div style="margin-bottom: 3vw;"></div>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -35,34 +35,14 @@
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    {% for strategy in bot.strategy.name.all %}
-                                        {{symbol.symbol}},
-                                    {% endfor %}
+                                    {{bot.strategy.name}}
                                 </td>
-                                <td>$1000</td>
-                                <td>$108</td>
-                                <td>Active</td>
-                                <td><a class="btn btn-sm btn-primary" href="">Disable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
+                                <td>${{bot.amount_invested}}</td>
+                                <td>${{bot.current_value}}</td>
+                                <td>{% if bot.is_deployed %}Active{% else %}Not Active{% endif %}</td>
+                                <td><a class="btn btn-sm btn-primary" href="{% url "changeStatus" bot.id %}">{% if bot.is_deployed %}Disable{% else %}Enable{% endif %}</a> <a class="btn btn-sm btn-primary" href="{% url "deleteBot" bot.id %}">Delete</a> <a class="btn btn-sm btn-primary" href="{% url "botDetails" bot.id %}">Details</a></td>
                             </tr>
                             {% endfor %}
-                            <tr>
-                                <td>TestBot</td>
-                                <td>AAPL, MSFT, GOOG</td>
-                                <td>MACD</td>
-                                <td>$1000</td>
-                                <td>$108</td>
-                                <td>Active</td>
-                                <td><a class="btn btn-sm btn-primary" href="">Disable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
-                            </tr>
-                            <tr>
-                                <td>TestBot2</td>
-                                <td>AMZN, MSFT</td>
-                                <td>MACD, Renko</td>
-                                <td>$100</td>
-                                <td>$12</td>
-                                <td>Inactive</td>
-                                <td><a class="btn btn-sm btn-primary" href="">Enable</a> <a class="btn btn-sm btn-primary" href="">Delete</a> <a class="btn btn-sm btn-primary" href="">Details</a></td>
-                            </tr>
                             
                         </tbody>
                     </table>

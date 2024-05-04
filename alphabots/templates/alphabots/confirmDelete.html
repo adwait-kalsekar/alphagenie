@@ -9,8 +9,12 @@
         <div class="col-md-6 text-center p-4">
             <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
             <h1 class="mb-4">{{delete_message}}</h1>
-            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "confirmDeleteBucket" resource id %}">Yes</a>
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "confirmDelete" resource id %}">Yes</a>
+            {% if resource == "bucket" %}
             <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "viewBuckets" %}">No</a>
+            {% else %}
+            <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url "viewBots" %}">No</a>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -1,0 +1,103 @@
+{% extends "dashboard/main.html" %}
+
+{% block title %}{{ticker}}{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Adjusted Close Price</h6>
+                <canvas id="adjClose" width="800" height="200"></canvas>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script>
+    function createChart(stockData, predicted_data, chart_canvas_id) {
+        // Initialize arrays to hold labels and datasets
+        var labels = [];
+        var datasets = [];
+      
+        // Loop through each stock symbol's data in stockData
+        Object.keys(stockData).forEach(function (symbol) {
+          var data = stockData[symbol];
+      
+          // Extract date and Adj_close values (same as before)
+          var dates = data.map(function (item) {
+            return item[0];
+          });
+          var adjClose = data.map(function (item) {
+            return item[1];
+          });
+      
+          // Add a new dataset for the current symbol (same as before)
+          datasets.push({
+            label: symbol,
+            data: adjClose,
+            fill: false,
+            borderColor: getRandomColor()
+          });
+      
+          // Use dates from the first symbol as labels (same as before)
+          if (labels.length === 0) {
+            labels = dates;
+          }
+        });
+      
+        // Add a new dataset for predicted data
+        datasets.push({
+          label: "Predicted", // Change "Predicted" to a more descriptive label if needed
+          data: predicted_data, // Use the predicted_data directly
+          fill: false, // Adjust fill property as needed for predicted data line
+          borderColor: "blue", // Set a different color for better distinction (optional)
+          borderDash: [5, 5] // Add a dashed line style for predicted data (optional)
+        });
+      
+        // Create a new Chart using Chart.js (same as before)
+        var ctx = document.getElementById(chart_canvas_id).getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: datasets
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                type: 'time',
+                time: {
+                  displayFormats: {
+                    day: 'MMM D'
+                  }
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: false,
+                }
+              }]
+            }
+          }
+        });
+      
+        // Function to generate random color (same as before)
+        function getRandomColor() {
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+        }
+      }
+
+    var stock_data_adj_close = JSON.parse(`{{ stock_data_adj_close|escapejs }}`);
+    var predicted_data = JSON.parse(`{{ predicted_data|escapejs }}`);
+    predicted_data = predicted_data.predictions;
+    createChart(stock_data_adj_close, predicted_data, 'adjClose');
+</script>
+
+{% endblock content %}
